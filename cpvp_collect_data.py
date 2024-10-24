@@ -13,25 +13,22 @@ class CollectData:
     def __init__(self, url, path):
         self.url = url
         self.path = path
-
-        if not self.count_files_in_folder(""):
+        # print("Total Image File: ",self.count_files_in_folder("IMAGES/"))
+        # print("Total HTML File: ",self.count_files_in_folder(""))
+        
+        if not self.count_files_in_folder("HTML/"):
             self.collect_pages()
 
         if not self.count_files_in_folder("IMAGES/"):
             self.image_extract()
 
         self.save_to_excel()
-
             
     def count_files_in_folder(self,file_path):
-        total_files = 0
-        for item in os.listdir(f"{self.path}/{file_path}"):
-            if os.path.isfile(os.path.join(f"{self.path}/", item)):
-                total_files += 1
-        return total_files
+        return sum(bool(os.path.isfile(os.path.join(f"{self.path}/{file_path}", item)))
+               for item in os.listdir(f"{self.path}/{file_path}"))
     
     @staticmethod
-
     def open_file(path,open_mode):
         with open(path,open_mode) as f:
             return f.read()
@@ -47,7 +44,7 @@ class CollectData:
         try:
             r = int(encodedString[:2],16)
             email = ''.join([chr(int(encodedString[i:i+2], 16) ^ r) for i in range(2, len(encodedString), 2)])
-        except:
+        except Exception:
             email = "N/A"
         return email
 
@@ -61,36 +58,38 @@ class CollectData:
         return list_of_set
 
     def collect_pages(self):
-        rc_no_1 = 0
-        write_read_path = f"{self.path}/{rc_no_1:04}.html"
-        self.fetchAndSaveToFile(url=[self.url][0],path=write_read_path)
+        rc_no = 0
+        write_read_path = f"{self.path}/HTML/{rc_no:04}.html"
+        self.fetchAndSaveToFile(url=[self.url][rc_no],path=write_read_path)
         cpvp = self.open_file(write_read_path,"r")
         soup = BeautifulSoup(cpvp,'html.parser')
         navigation_link_set = self.page_navigation_link([self.url],soup)
+        print(navigation_link_set)
 
         loop_status = True
         while loop_status:
-            rc_no_1 += 1
-            write_read_path = f"{self.path}/{rc_no_1:04}.html"
-            self.fetchAndSaveToFile(url=navigation_link_set[rc_no_1],path=write_read_path)
+            rc_no += 1
+            write_read_path = f"{self.path}/HTML/{rc_no:04}.html"
+            self.fetchAndSaveToFile(url=navigation_link_set[rc_no],path=write_read_path)
             cpvp = self.open_file(write_read_path,"r")
             soup = BeautifulSoup(cpvp,'html.parser')
             navigation_link_set = self.page_navigation_link(navigation_link_set,soup)
-            if rc_no_1 >= len(navigation_link_set)-1:
+            print(navigation_link_set)
+
+            if rc_no >= len(navigation_link_set)-1:
                 loop_status = False
         return navigation_link_set
     
     def details(self):
-        number_of_file_in_a_dir = len([name for name in os.listdir(f"{self.path}/") if os.path.isfile(os.path.join(f"{self.path}/", name))])
+        number_of_file_in_a_dir = len([name for name in os.listdir(f"{self.path}/HTML/") if os.path.isfile(os.path.join(f"{self.path}/HTML/", name))])
         image_list = []
         name_list = []
         occupation_list = []
         batch_list = []
         email_list = []
 
-        i = 0
-        while i < number_of_file_in_a_dir:
-            read_path = f"{self.path}/{i:04}.html"
+        for i in range(number_of_file_in_a_dir):
+            read_path = f"{self.path}/HTML/{i:04}.html"
             current_file = self.open_file(read_path,"r")
             soup = BeautifulSoup(current_file,'html.parser')
             info_list = soup.select("table.table.table-striped.table-bordered>tbody>tr>td>div>div>div") #>img.img-fluid.img-thumbnail
@@ -100,8 +99,6 @@ class CollectData:
             batch_list.append([info_list[x].find_all(string=re.compile("Batch"))[0].strip() for x in range(len(info_list)) if x%2==1])
             email_code = [self.cfDecodeEmail(info_list[x].find("a").attrs["href"][len(r"/cdn-cgi/l/email-protection#"):]) for x in range(len(info_list)) if x%2==1]
             email_list.append(email_code)
-            i += 1
-
         merged_image_list = list(itertools.chain(*image_list))
         merged_name_list = list(itertools.chain(*name_list))
         merged_occupation_list = list(itertools.chain(*occupation_list))
@@ -135,19 +132,21 @@ class CollectData:
         image_name_list_ = []
 
         for i in range(len(detail_info["image_list"])):
-            for j in range(len(detail_info["image_list"][i])):
-                image_name_list_.append(f"{i}{j}_{detail_info['name_list'][i][j]}")
+            image_name_list_.extend(
+                f"{i}{j}_{detail_info['name_list'][i][j]}"
+                for j in range(len(detail_info["image_list"][i]))
+            )
         data = pd.DataFrame(detail_info["merged_list"]|{"Image":image_name_list_}, index=list(range(1,len(detail_info["merged_list"]["PHOTO"])+1))) #, index=list(range(1,len(detail_info["merged_list"]["PHOTO"])+1))
         data.to_excel(
             f"{self.path}/TEMP/cpvp_prahtoni_all.xlsx",
-            sheet_name=f"cpvp_prahtoni_all",
+            sheet_name="cpvp_prahtoni_all",
             index=True,
             index_label="SL",
-            freeze_panes=(1,1)
+            freeze_panes=(1, 1),
         )
 
 
-url = "https://www.cpvppraktoni.com/alumni/alumni_list" 
+url = "https://www.cpvppraktoni.com/index.php/alumni/alumni_list/" 
 path = "CPVP"
 
 if __name__ == '__main__': 

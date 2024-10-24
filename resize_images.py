@@ -32,4 +32,4 @@ if __name__ == '__main__':
     img = ResizeImage(180, path, result_path) 
 
 
-#! To Run: python resize.py 
+#! To Run: python resize_images.py 
