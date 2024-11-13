@@ -128,8 +128,7 @@ def details(directory):
     batch_list = []
     email_list = []
 
-    i = 0
-    while i < number_of_file_in_a_dir:
+    for i in range(number_of_file_in_a_dir):
         read_path = f"{directory}{i:04}.html"
         current_file = open_file(read_path,"r")
         soup = BeautifulSoup(current_file,'html.parser')
@@ -140,8 +139,6 @@ def details(directory):
         batch_list.append([info_list[x].find_all(string=re.compile("Batch"))[0].strip() for x in range(len(info_list)) if x%2==1])
         email_code = [cfDecodeEmail(info_list[x].find("a").attrs["href"][len(r"/cdn-cgi/l/email-protection#"):]) for x in range(len(info_list)) if x%2==1]
         email_list.append(email_code)
-        i += 1
-
     marged_image_list = list(itertools.chain(*image_list))
     marged_name_list = list(itertools.chain(*name_list))
     marged_occupation_list = list(itertools.chain(*occupation_list))
@@ -175,18 +172,20 @@ detail_info = details(directory='CPVP/')
 image_name_list_ = []
 
 for i in range(len(detail_info["image_list"])):
-    for j in range(len(detail_info["image_list"][i])):
-        image_name_list_.append(f"{i}{j}_{detail_info['name_list'][i][j]}")
+    image_name_list_.extend(
+        f"{i}{j}_{detail_info['name_list'][i][j]}"
+        for j in range(len(detail_info["image_list"][i]))
+    )
 
 # print(image_name_list_)
 def save_to_excel():
     data = pd.DataFrame(detail_info["marged_list"]|{"Image":image_name_list_}, index=list(range(1,len(detail_info["marged_list"]["PHOTO"])+1))) #, index=list(range(1,len(detail_info["marged_list"]["PHOTO"])+1))
     data.to_excel(
         "CPVP/TEMP/cpvp_prahtoni_all.xlsx",
-        sheet_name=f"cpvp_prahtoni_all",
+        sheet_name="cpvp_prahtoni_all",
         index=True,
         index_label="SL",
-        freeze_panes=(1,1)
+        freeze_panes=(1, 1),
     )
 
 save_to_excel()
