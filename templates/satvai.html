@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Satvai Nursery{% endblock title %}
+{% block head %}
+<img src="{% static 'images/1f331.svg' %}" alt="" width="40px" height="40px">
+Satvai Nursery, Bogra, Bangladesh{% endblock head %}
+
+{% block nav %}
+{% regroup context by category as categories %}
+<nav>
+    {% for items in categories %}
+    <a href="#{% spaceless %}{{ items.grouper }}{% endspaceless %}" style="text-decoration:none;">
+        <button class="btn btn-sm btn-group btn-success mb-1">
+            {{ items.grouper }}
+        </button>
+    </a>
+    {% endfor %}
+</nav>
+<h6 class="p-0 m-0 float-end">Total Item: <span class="text-danger">{{context.count}}</span></h6>
+{% endblock nav %}
+{% block contents %}
+{% regroup context by category as categories %}
+{% for items in categories %}
+<section class=" m-0 mt-3"><a name="{% spaceless %}{{ items.grouper }}{% endspaceless %}">
+        <h5 class="mt-2 p-0 text-success text-center">{{ items.grouper }} (No. of Items: {{items.list|length}})</h5>
+    </a>
+
+    <div class="row row-cols-4 d-flex justify-content-center">
+        {% for item in items.list %}
+        <div class="col zoom border border-secondary text-center p-0 mt-2">
+            <h6 class="text-bg-warning text-warning-emphasis p-2 m-0">{{ forloop.counter }}:
+                {{item.plant_name}}</h6>
+            <img class="p-0 m-0" src="{{ item.plant_image }}" width="239" height="239" alt=""><br>
+            <p class="p-0">Price: <span class="text-danger p-1">{{item.price}}</span></p>
+            <p class="p-0">Category: <span class="text-primary p-1">{{item.category}}</span></p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endfor %}
+{% endblock contents %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block favicon %}
+<link rel="shortcut icon" type="image/x-icon" href="{% get_static_prefix %}images/1f33c.svg">
+{% endblock favicon %}
+{% load mahimsoft_tags %}
+{% block title %}Brihaat Nursery{% endblock title %}
+{% block head %}
+<img class="pb-1" src="{% static 'images/1774213870_4-01.svg' %}" alt="" width="40px" height="40px">
+Brihaat Nursery, East Sadarpur, Ashulia, Dhaka{% endblock head %}
+
+{% block nav %}
+{% regroup context by title as categories %}
+<nav>
+    {% for items in categories %}
+    <a href="#{% spaceless %}{{ items.grouper }}{% endspaceless %}" style="text-decoration:none;">
+        <button class="btn btn-sm btn-group btn-success mb-1">
+            {{ items.grouper|trim }}:<span class="text-info">{{items.list|length}}</span>
+        </button>
+    </a>
+    {% endfor %}
+</nav>
+<h6 class="p-0 m-0 float-end">Total Item: <span class="text-danger">{{context.count}}</span></h6>
+{% endblock nav %}
+{% block contents %}
+{% regroup context by title as categories %}
+{% for items in categories %}
+<section class="mt-3"><a name="{% spaceless %}{{ items.grouper }}{% endspaceless %}">
+        <h5 class="mt-2 p-0 text-success text-center">{{ items.grouper }} (No. of Items: {{items.list|length}})</h5>
+    </a>
+
+    {% if items.grouper|trim == "Pure Indoor" %}
+    <p class="tiro-bangla-regular">যেখানে ন্যাচারাল আলো বাতাস খুবই কম বা অফিস রুমে এই ধরনের গাছ রাখতে পারবেন।
+        এইসব গাছ অধিকাংশ ক্ষেত্রে সরাসরি সুর্যের আলো নিতে পারে না।
+        ডিরেক্ট সানলাইটে রাখবেন না এতে গাছের পাতা জ্বলে যাবে বা গাছ মারাও যেতে পারে।
+        পানি খুবই কম লাগে এইসব গাছের। দুই সপ্তাহে একবার পানি দিলেই হয়ে যায়।</p>
+    {% elif items.grouper|trim == "Semi Indoor" %}
+    <p class="galada-regular"> পর্যাপ্ত আলো বাতাস যুক্ত জায়গা বা যে স্থানে সরাসরি সুর্যের আলো আসে না কিন্তু যথেষ্ট
+        পরিমান আলো বাতাস থাকে সেই স্থান
+        এই ধরনের গাছের জন্য উপযুক্ত।
+        দিনের বেলা বড় গাছের নিচে দাড়ালে যেমন আলো বাতাস পাওয়া যায় ঠিক তেমন।
+        এখানে কিছু গাছ সরাসরি সুর্যের আলো নিতে পারে না। তাই ডিরেক্ট সানলাইটে রাখবেন না এতে গাছের পাতা জ্বলে যাবে বা গাছ
+        মারাও যেতে পারে।
+        এই ধরনের গাছে পানি খুব রেগুলার বা প্রতিদিন দিতে হয় না। প্রয়োজন বুঝে দেয়া লাগে।
+    </p>
+    {% endif %}
+    <div class="row row-cols-4 d-flex justify-content-center">
+        {% for item in items.list %}
+        <div class="col zoom border border-secondary text-center p-0 mt-2">
+            <h6 class="text-bg-warning text-warning-emphasis p-2 m-0">{{ forloop.counter }}:
+                {{item.product_name}}</h6>
+            <img class="p-0 m-0" src="{{ item.plant_image }}" width="239" height="239" alt=""><br>
+            <p class="p-0">Price: <span class="text-danger p-1">{{item.price}}</span></p>
+            <p class="p-0">Category: <span class="text-primary p-1">{{item.title}}</span></p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endfor %}
+{% endblock contents %}

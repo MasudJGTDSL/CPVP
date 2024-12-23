@@ -1,0 +1,280 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load mahimsoft_tags %}
+{% block favicon %}
+<link rel="shortcut icon" type="image/x-icon" href="{% get_static_prefix %}images/CPVP-Logo.png">
+{% endblock favicon %}
+
+{% block style %}
+<style>
+    @page {
+        size: a4 landscape;
+        margin: 5mm 5mm 10mm 5mm;
+        counter-increment: page;
+
+        /* @bottom-left {
+      bottom:100px;
+      content: attr(hr);
+    } */
+        @bottom-right {
+            font-family: 'Times New Roman';
+            content: '\00A9 Mahim Soft, Page No : ' counter(page) ' of ' counter(pages);
+            white-space: pre;
+            color: grey;
+        }
+    }
+
+    table,
+    tr,
+    td,
+    th {
+        font-size: xx-small;
+        font-family: "Tiro Bangla", serif;
+        padding: 0px;
+        margin: 0px;
+    }
+</style>
+{% endblock style %}
+
+{% block title %}
+{{"CHANDRAPRABHA VIDYAPITHA"|title}}
+{% endblock title %}
+
+
+{% block head %}
+<img src="{% static 'images/CPVP-Logo.png' %}" alt="" width="50px" height="50px">
+{{"100 years of Chandraprabha Vidyapitha, Paksey, Ishwardi, Pabna"|title}}
+{% endblock head %}
+
+{% block nav %}
+
+{% regroup context by batch as batches %}
+<nav>
+    {% for items in batches %}
+    <a href="#{% spaceless %}{{ items.grouper }}{% endspaceless %}" style="text-decoration:none;">
+        <button class="btn btn-sm btn-group  {% cycle 'btn-success' 'btn-primary' %} mb-1">
+            {{ items.grouper }}
+        </button>
+    </a>
+    {% endfor %}
+</nav>
+<div class="d-flex justify-content-between py-1 bg-secondary-subtle">
+    <h6 class="m-0 p-1 ps-2 pe-4">Date: <span class="text-danger fw-bold">20-21 December 2024</span>
+    </h6>
+    <h6 class="m-0 p-1 ps-2">Total Participant: <span class="text-danger fw-bold">{{context.count}}</span>
+    </h6>
+</div>
+
+<div class="d-flex justify-content-between mt-1" style="width: 100%;">
+<div class="d-flex justify-content-between"  style="width: 40%;">
+
+    <div class="mb-2 ps-2 p-0" style="width: 50%;">
+        <h5 class="galada-regular text-start" style="color:#CD6600;">শতবর্ষপূর্তি উৎসব ২০২৪</h5>
+        <h6 class="tiro-bangla-regular-italic text-start">অনুষ্ঠান সুচি</h6>
+        <table class="table table-responsive text-start p-0 table-striped" style="font-size: xx-small;">
+            <tr>
+                <th class="p-0 m-0" colspan="2">২০ ডিসেম্বর '২৪ শুক্রবার</th>
+            </tr>
+            <tr>
+                <th class="p-0 m-0" colspan="2">সকাল</th>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">৯.০০ মিনিট</td>
+                <td class="p-0 m-0">: নিবন্ধিত প্রাক্তনীদের উপহার সামগ্রী বিতরণ শুরু</td>
+            </tr>
+            <tr>
+                <th class="p-0 m-0" colspan="2">বিকেল</th>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">৪.০০-৪.০২ মিনিট</td>
+                <td class="p-0 m-0">: অনুষ্ঠান শুরুর আহ্বান</td>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">৪.০৩-৪.১০ মিনিট</td>
+                <td class="p-0 m-0">: পতাকা উত্তোলন, জাতীয় সঙ্গীত পরিবেশন</td>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">৪.১০-৪.১৫ মিনিট</td>
+                <td class="p-0 m-0">: অতিথিদের আসন অলংকরণ</td>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">৪.১৬-৪.২৫ মিনিট</td>
+                <td class="p-0 m-0">: পবিত্র কোরআন ও গীতা পাঠ</td>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">৪.২৬-৪.২৮ মিনিট</td>
+                <td class="p-0 m-0">: শোক প্রত্তাব</td>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">৪.২৯-৪.৩১ মিনিট</td>
+                <td class="p-0 m-0">: সভাপতির বন্তব্য</td>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">৪.৩২-৪.৩৪ মিনিট</td>
+                <td class="p-0 m-0">: প্রধান উপদেষ্টার বক্তব্য</td>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">৪.৩৫-৪-৩৭ মিনিট</td>
+                <td class="p-0 m-0">: প্রধান সমন্বয়কের বক্তব্য</td>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">৪.৩৮-৪.৪০ মিনিট</td>
+                <td class="p-0 m-0">: আহ্বায়কের বক্তব্য</td>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">8.৪১-৪.৪৪ মিনিট</td>
+                <td class="p-0 m-0">: সদস্য সচিবের বক্তব্য</td>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">8.৪৫-৪.৫০ মিনিট</td>
+                <td class="p-0 m-0">: থিম সং</td>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">৪.৫০-৫.০০ মিনিট</td>
+                <td class="p-0 m-0">: এভি শতবর্ষ ভ্রমণ</td>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">৫.০১-৬.৩০ মিনিট</td>
+                <td class="p-0 m-0">: নির্বাচিত ব্যক্তিদের স্কুল প্রসঙ্গ ও শিক্ষা নিয়ে আলোচনা</td>
+            </tr>
+            <tr>
+                <th class="p-0 m-0" colspan="2">সন্ধ্যা</th>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">৬.৩০-১০.০০মিনিট</td>
+                <td class="p-0 m-0">: সাংস্কৃতিক অনুষ্ঠান, ঢাকা ও স্থানীয় শিল্পীদের সমন্বয়ে</td>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">১০.৩০</td>
+                <td class="p-0 m-0">: রাতের খাবার</td>
+            </tr>
+
+
+        </table>
+    </div>
+    <div class="mb-2 p-0" style="width: 50%;">
+        <table class="table table-responsive text-start p-0">
+            <h5 class="galada-regular text-start" style="color:#CD6600;">&nbsp;</h5>
+            <h6 class="tiro-bangla-regular-italic text-start">&nbsp;</h6>
+
+            <tr>
+                <th class="p-0 m-0" colspan="2">২১ ডিসেম্বর'২৪ শনিবার</th>
+            </tr>
+            <tr>
+                <th class="p-0 m-0" colspan="2">সকাল</th>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">৮.০০-৯.৩০ মিনিট</td>
+                <td class="p-0 m-0">: নাস্তা, পতাকা উত্তোলন ও জাতীয় সঙ্গীত পরিবেশন</td>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">৯.৩০-৯.৩৫ মিনিট</td>
+                <td class="p-0 m-0">: থিম সং</td>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">১০.০০ মিনিট</td>
+                <td class="p-0 m-0">: শোভাযাত্রা</td>
+            </tr>
+            <tr>
+                <th class="p-0 m-0" colspan="2">দুপুর</th>
+            </tr>
+
+            <tr>
+                <td class="p-0 m-0">১২.০০ মিনিট</td>
+                <td class="p-0 m-0">: সভাপতি, প্রধান অতিথি ও অতিথিদের আসন অলংকরণ</td>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">১২.০৫ মিনিট</td>
+                <td class="p-0 m-0">: প্রধান অতিথির বক্তব্য</td>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">১২.১০-১.৩০ মিনিট</td>
+                <td class="p-0 m-0">: স্মৃতিচারণ</td>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">১.৩০-২.৩০ মিনিট</td>
+                <td class="p-0 m-0">: নামাজ ও দুপুরের খাবার বিরতি</td>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">২.৩০-৫.০০ মিনিট</td>
+                <td class="p-0 m-0">: স্মৃতিচারণ</td>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">৫.৩০-৬.৩০ মিনিট</td>
+                <td class="p-0 m-0">: লোগো উন্মোচন</td>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">৬.৩০-৬.৩৫ মিনিট</td>
+                <td class="p-0 m-0">: লেজার শো</td>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">৬.৩৫-৬৪০ মিনিট</td>
+                <td class="p-0 m-0">: আতশবাজি</td>
+            </tr>
+            <tr>
+                <td class="p-0 m-0">৬.৪০- মিনিট</td>
+                <td class="p-0 m-0">: সাংস্কৃতিক সন্ধ্যা</td>
+            </tr>
+        </table>
+    </div>
+    </div>
+    <div class="mb-2 p-0 border border-1 border-dark" style="width: 60%;">
+        {{chart.barchart|safe}}
+    </div>
+</div>
+{% comment %} <!-- <div class="d-flex justify-content-between mt-1" style="width: 100%;">
+    <div class="mb-2 p-0" style="width: 40%;">
+        <img src="{% static 'images/Schedule.jpg' %}" width="500px" height="382px" alt="">
+    </div>
+    <div class="mb-2 p-0 border border-1 border-dark" style="width: 60%;">
+        {{chart.barchart|safe}}
+    </div>
+</div> --> {% endcomment %}
+{% endblock nav %}
+
+
+{% block contents %}
+{% regroup context by batch as batches %}
+{% for items in batches %}
+<section class="border border-black p-0 m-0 mb-2"><a name="{% spaceless %}{{ items.grouper }}{% endspaceless %}">
+        <h5 class="p-1 m-0 text-success bg-warning-subtle text-center">{{ items.grouper }} (Nos. of Participant:
+            {{items.list|length}})</h5>
+    </a>
+
+    <div class="row row-cols-2 row-cols-lg-5 row-cols-md-3 row-cols-sm-2  px-3 d-flex justify-content-center">
+
+        {% for item in items.list %}
+        <div class="col-sm zoom border border-secondary mt-2 ms-0 p-0">
+            <img class="p-0 m-0" src="{{ item.image.url }}" width="220px" height="220px" alt=""><br>
+            <span class="text-center">
+                <p style="width: 220px; font-size: small;"
+                    class="fw-bold text-danger-emphasis pb-0 mb-0 bg-success-subtle">
+                    {{item.praktony_name|title}}</p>
+                <p class=" text-danger p-0 m-0 fw-bold">{{item.batch}} <span
+                        class="text-muted text-opacity-25">:{{item.id|stringformat:"04d"}}</span></p>
+                <p class="p-0 m-0 
+
+                {% if item.reg_date|date:'Y-m-d'|is_later_than:'2024-07-12' %}
+                text-muted 
+                {% else %}
+                text-danger
+                {% endif %}
+
+                " style="font-size: x-small;">Date of Reg:{{item.reg_date|date:"d b Y"|title}}
+                </p>
+                <p class="p-0 m-0">Occupation: <span
+                        class="text-success p-1">{{item.occupation|default_if_none:"-----"|default:"-----"}}</span></p>
+                <p class="p-0 m-0 text-break">
+                    {% if item.email %}
+                    <img src="{% static 'images/email.svg' %}" width="16px" height="16px" alt="Top"><span
+                        class="text-primary p-1">{{item.email}}</span>
+                </p>
+                {% endif %}
+            </span>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endfor %}
+
+{% endblock contents %}

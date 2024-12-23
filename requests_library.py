@@ -1,4 +1,8 @@
 import requests
+from requests_html import HTMLSession
+from requests_html import HTML
+from fake_useragent import UserAgent
+
 from bs4 import BeautifulSoup
 import re
 from datetime import datetime
@@ -7,6 +11,16 @@ import os
 import itertools
 import pandas as pd
 import openpyxl
+
+url = "https://www.zillow.com/homes/recently_sold/?searchQueryState=%7B%22pagination%22%3A%7B%7D%2C%22isMapVisible%22%3Atrue%2C%22mapBounds%22%3A%7B%22west%22%3A-120.142035125%2C%22east%22%3A-73.560003875%2C%22south%22%3A20.620884319144793%2C%22north%22%3A52.6886545933123%7D%2C%22mapZoom%22%3A4%2C%22filterState%22%3A%7B%22sort%22%3A%7B%22value%22%3A%22globalrelevanceex%22%7D%2C%22fsba%22%3A%7B%22value%22%3Afalse%7D%2C%22fsbo%22%3A%7B%22value%22%3Afalse%7D%2C%22nc%22%3A%7B%22value%22%3Afalse%7D%2C%22cmsn%22%3A%7B%22value%22%3Afalse%7D%2C%22auc%22%3A%7B%22value%22%3Afalse%7D%2C%22fore%22%3A%7B%22value%22%3Afalse%7D%2C%22rs%22%3A%7B%22value%22%3Atrue%7D%2C%22ah%22%3A%7B%22value%22%3Atrue%7D%7D%2C%22isListVisible%22%3Atrue%7D"
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/53'}
+# response = requests.get(url, headers=headers)
+# print(response.content)
+ua = UserAgent()
+# print(ua.chrome)
+header = {'User-Agent':str(ua.chrome)}
+# print(header)
+
 
 # ! TODO: request module with proxy (Search)
 #! TODO: https://oxylabs.io/products/residential-proxy-pool [masud.jgtdsl@gmail.com, PW: MStaqLZ7A9JJ@!@]

@@ -163,5 +163,11 @@ cython_debug/
 
 CPVP/*
 !CPVP/
+BRIHAT/
+SATVAI/
+brihat/
+satvai/
+cpvp/
+
 
 #! FOLDER STRUCTURE: ./CPVP>IMAGES, ./CPVP>RESIZED_IMAGES, ./CPVP>TEMP

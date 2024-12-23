@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+
+Web Scraping
+{% endblock title %}
+
+{% block head %}
+<img class="me-2" src="{% static 'images/webflow.svg' %}" width="38px" height="38px" alt="">Web Scraping
+{% endblock head %}
+
+
+{% block contents %}
+<div class="d-flex justify-content-center mt-4">
+    <a href="{% url 'SATVAI:satvai' %}"><button class="btn btn-success m-1"><span>Satvai</span></button></a>
+    <a href="{% url 'SATVAI:brihat' %}"><button class="btn btn-warning m-1"><span>Brihaat</span></button></a>
+    <a href="{% url 'SATVAI:cpvp' %}"><button class="btn btn-primary m-1"><span>CPVP</span></button></a>
+</div>
+{% endblock contents %}
